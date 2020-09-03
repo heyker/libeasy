@@ -1,0 +1,28 @@
+# project
+set(PROJECTNAME "Test")
+project(${PROJECTNAME} C CXX)
+set (CMAKE_CXX_FLAG "-Wall")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "./")
+ 
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
+ 
+find_package(OpenCV REQUIRED)
+ 
+file(GLOB_RECURSE ${PROJECTNAME}_HEADERS ${CMAKE_SOURCE_DIR}/*.h)
+file(GLOB_RECURSE ${PROJECTNAME}_SOURCES ${CMAKE_SOURCE_DIR}/*.cpp)
+file(GLOB_RECURSE ${PROJECTNAME}_SOURCES ${CMAKE_SOURCE_DIR}/*.c)
+ 
+include_directories (include)
+include_directories (src)
+ 
+SET(${PROJECTNAME}_SOURCES
+    main.cpp
+    ${${PROJECTNAME}_SOURCES}
+)
+ 
+ 
+ADD_EXECUTABLE(${PROJECTNAME}
+    ${${PROJECTNAME}_SOURCES}
+    ${${PROJECTNAME}_HEADERS}
+ 
+)

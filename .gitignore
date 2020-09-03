@@ -6,6 +6,9 @@
 .vscode/
 
 # compilation files
+debug/
+build/
+
 libtool-e
 .libs/
 .deps/
@@ -56,3 +59,4 @@ sample/uthread_test
 .dirstamp
 test/*/*_test
 test-driver
+debug/cmake_install.cmake
