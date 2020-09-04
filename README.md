@@ -8,7 +8,7 @@
 * aclocal
 * autoconf
 * automake
-
+* openssl-devel
 ### Compile
 
 ```shell
