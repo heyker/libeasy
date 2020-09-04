@@ -148,7 +148,7 @@ static int echo_process(easy_request_t *r)
 
 static int echo_connect(easy_connection_t *c)
 {
-    char                    *str = "hello, world!\n";
+    const char *str = "hello, world!\n";
     write(c->fd, str, strlen(str) + 1);
     return EASY_OK;
 }

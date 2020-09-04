@@ -313,7 +313,6 @@ TEST(easy_mem_pool, set_thread_memlimit)
 TEST(easy_mem_pool, global_realloc)
 {
     int64_t                 i = 0;
-    const int64_t           thread_num = 4;
     pthread_t               pd[thread_num];
 
     for (i = 0; i < thread_num; i++) {
@@ -330,7 +329,6 @@ TEST(easy_mem_pool, global_realloc)
 TEST(easy_mem_pool, thread_realloc)
 {
     int64_t                 i = 0;
-    const int64_t           thread_num = 4;
     pthread_t               pd[thread_num];
 
     for (i = 0; i < thread_num; i++) {
@@ -350,7 +348,6 @@ TEST(easy_mem_pool, alloc_limit)
 
     int64_t                 i = 0;
     int64_t                 total = 0;
-    int64_t                 limit = 1024 * 1024;
     buf_t                   *head = NULL;
     easy_mempool_set_memlimit(pool, limit);
 

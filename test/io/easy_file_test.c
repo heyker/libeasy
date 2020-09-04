@@ -15,7 +15,7 @@
 #define TEST_ROOT_DIR "/tmp"
 static char             test_thread_7_server_text[400];
 static char             test_thread_7_filename[64];
-static void test_thread_7_string_tobuf(easy_pool_t *pool, easy_list_t      *bc, char *name, easy_buf_string_t *s)
+static void test_thread_7_string_tobuf(easy_pool_t *pool, easy_list_t      *bc, const char *name, easy_buf_string_t *s)
 {
     if (s->len) {
         easy_buf_t              *b = easy_buf_check_write_space(pool, bc, s->len + strlen(name) + 16);

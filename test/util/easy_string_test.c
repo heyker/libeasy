@@ -183,7 +183,7 @@ TEST(easy_string, vsprintf2)
 #endif
     double                  f = 9876123.2334;
     char                    *p = NULL;
-    char                    buffer[32];
+    char                    str_buffer[32];
     int                     len;
 
     for(i = 0; i < 2; i++) {
@@ -228,6 +228,6 @@ TEST(easy_string, vsprintf2)
     }
 
     p = NULL;
-    len = test_easy_printf(buffer, 32, "%s", p);
+    len = test_easy_printf(str_buffer, 32, "%s", p);
     EXPECT_EQ(len, 0);
 }

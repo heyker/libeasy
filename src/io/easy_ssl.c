@@ -14,10 +14,10 @@ static int easy_ssl_handshake(easy_connection_t *c);
 static void easy_ssl_connection_handshake_handler(easy_connection_t *c);
 static void easy_ssl_handshake_handler(struct ev_loop *loop, ev_io *w, int revents);
 static void easy_ssl_clear_error();
-static void easy_ssl_error(int level, char *fmt, ...);
+static void easy_ssl_error(int level, const char *fmt, ...);
 static int easy_ssl_read(easy_connection_t *c, char *buf, int size, int *pending);
 static int easy_ssl_write(easy_connection_t *c, easy_list_t *l);
-static void easy_ssl_connection_error(easy_connection_t *c, int sslerr, int err, char *text);
+static void easy_ssl_connection_error(easy_connection_t *c, int sslerr, int err, const char *text);
 static int easy_ssl_server_create(easy_ssl_t *ssl, easy_ssl_ctx_t *ss);
 static int easy_ssl_parse_set_value(easy_ssl_ctx_t *ss, char *key, char *value);
 static int easy_ssl_ctx_create(easy_ssl_ctx_t *ssl);
@@ -348,7 +348,7 @@ static void easy_ssl_clear_error()
  * print ssl error
  */
 #define EASY_MAX_CONF_ERRSTR 1024
-static void easy_ssl_error(int level, char *fmt, ...)
+static void easy_ssl_error(int level, const char *fmt, ...)
 {
     uint64_t                n;
     va_list                 args;
@@ -386,7 +386,7 @@ static void easy_ssl_error(int level, char *fmt, ...)
 /**
  * easy_ssl_connection_error
  */
-static void easy_ssl_connection_error(easy_connection_t *c, int sslerr, int err, char *text)
+static void easy_ssl_connection_error(easy_connection_t *c, int sslerr, int err, const char *text)
 {
     int                     n;
     int                     level;

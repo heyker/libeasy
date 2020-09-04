@@ -9,7 +9,7 @@
 #include <sched.h>
 
 // 全局变量
-char                    *easy_build_time = "VERSION: ";// PACKAGE_VERSION ", BUILD:" __DATE__ " " __TIME__;
+const char              *easy_build_time = "VERSION: ";// PACKAGE_VERSION ", BUILD:" __DATE__ " " __TIME__;
 easy_io_t               easy_io_var = {NULL};
 easy_atomic_t           easy_io_list_lock = 0;
 easy_list_t             easy_io_list_var = EASY_LIST_HEAD_INIT(easy_io_list_var);

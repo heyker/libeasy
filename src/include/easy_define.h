@@ -68,9 +68,6 @@
 #define EASY_BREAK                  (-4)
 #define EASY_AGAIN                  (-EAGAIN)
 
-#ifndef __USE_GNU
-#define __USE_GNU
-#endif
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // typedef
 typedef struct easy_addr_t {

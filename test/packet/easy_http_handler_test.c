@@ -232,7 +232,7 @@ TEST(easy_http_hander, client_on_encode)
     easy_request_t          *r;
     easy_http_packet_t      *hr;
     easy_buf_t              *b, *b1;
-    char                    *ptr;
+    const char              *ptr;
 
     easy_log_level = (easy_log_level_t)0;
 
@@ -437,7 +437,7 @@ TEST(easy_http_hander, printf)
     easy_http_request_printf(&r, "a: %04d, s: %s", 123, "test");
 
     b = easy_list_get_first(&r.output, easy_buf_t, node);
-    char                    *str = "a: 0123, s: test";
+    const char  *str = "a: 0123, s: test";
     EXPECT_TRUE(strncmp(b->pos, str, strlen(str)) == 0);
 
     easy_pool_destroy(pool);
@@ -558,7 +558,7 @@ TEST(easy_http_hander, server_on_encode_chunked)
     easy_pool_destroy(pool);
 }
 
-easy_http_request_t  *easy_test_query_string_decode(easy_message_t *m, char *query_str)
+easy_http_request_t  *easy_test_query_string_decode(easy_message_t *m, const char *query_str)
 {
     easy_http_request_t     *ptr;
     int                     size;
@@ -600,8 +600,8 @@ TEST(easy_http_hander, decode1)
 
     {
         // 不带问号
-        char                    *query_str = "a=y&b=c";
-        char                    *dst_query_str = "";
+        const char      *query_str = "a=y&b=c";
+        const char      *dst_query_str = "";
 
         ptr = easy_test_query_string_decode(m, query_str);
 
@@ -610,8 +610,8 @@ TEST(easy_http_hander, decode1)
 
     {
         //  一个问号 ?a
-        char                    *query_str = "?a=y&b=c";
-        char                    *dst_query_str = query_str + 1;
+        const char      *query_str = "?a=y&b=c";
+        const char      *dst_query_str = query_str + 1;
 
         ptr = easy_test_query_string_decode(m, query_str);
 
@@ -620,8 +620,8 @@ TEST(easy_http_hander, decode1)
 
     {
         // 一个问号不带参数?
-        char                    *query_str = "?";
-        char                    *dst_query_str = "";
+        const char      *query_str = "?";
+        const char      *dst_query_str = "";
 
         ptr = easy_test_query_string_decode(m, query_str);
 
@@ -630,8 +630,8 @@ TEST(easy_http_hander, decode1)
 
     {
         // 两个问号
-        char                    *query_str = "??a=y&b=c";
-        char                    *dst_query_str = query_str + 1;
+        const char      *query_str = "??a=y&b=c";
+        const char      *dst_query_str = query_str + 1;
 
         ptr = easy_test_query_string_decode(m, query_str);
 
@@ -640,8 +640,8 @@ TEST(easy_http_hander, decode1)
 
     {
         // 两个问号不带参数
-        char                    *query_str = "??";
-        char                    *dst_query_str = "?";
+        const char      *query_str = "??";
+        const char      *dst_query_str = "?";
 
         ptr = easy_test_query_string_decode(m, query_str);
 
@@ -650,8 +650,8 @@ TEST(easy_http_hander, decode1)
 
     {
         // 3个问号不带参数
-        char                    *query_str = "???";
-        char                    *dst_query_str = query_str + 1;
+        const char      *query_str = "???";
+        const char      *dst_query_str = query_str + 1;
 
         ptr = easy_test_query_string_decode(m, query_str);
 
@@ -660,8 +660,8 @@ TEST(easy_http_hander, decode1)
 
     {
         // 问号中间有字符
-        char                    *query_str = "?a=y&b=c?111";
-        char                    *dst_query_str = "a=y&b=c?111";
+        const char      *query_str = "?a=y&b=c?111";
+        const char      *dst_query_str = "a=y&b=c?111";
 
         ptr = easy_test_query_string_decode(m, query_str);
 
@@ -670,8 +670,8 @@ TEST(easy_http_hander, decode1)
 
     {
         // 问号中间有字符，不带参数
-        char                    *query_str = "?a=y&b=c?";
-        char                    *dst_query_str = "a=y&b=c?";
+        const char      *query_str = "?a=y&b=c?";
+        const char      *dst_query_str = "a=y&b=c?";
 
         ptr = easy_test_query_string_decode(m, query_str);
 
@@ -680,8 +680,8 @@ TEST(easy_http_hander, decode1)
 
     {
         // 井号后面没有问号
-        char                    *query_str = "?a=y&b=c#abc";
-        char                    *dst_query_str = "a=y&b=c";
+        const char      *query_str = "?a=y&b=c#abc";
+        const char      *dst_query_str = "a=y&b=c";
 
         ptr = easy_test_query_string_decode(m, query_str);
 
@@ -690,8 +690,8 @@ TEST(easy_http_hander, decode1)
 
     {
         // 井号后面有问号
-        char                    *query_str = "?a=y&b=c#abc??111";
-        char                    *dst_query_str = "a=y&b=c";
+        const char      *query_str = "?a=y&b=c#abc??111";
+        const char      *dst_query_str = "a=y&b=c";
 
         ptr = easy_test_query_string_decode(m, query_str);
 
@@ -700,8 +700,8 @@ TEST(easy_http_hander, decode1)
 
     {
         // 问号后面是井号井号后面有问号
-        char                    *query_str = "?#abc??111";
-        char                    *dst_query_str = "";
+        const char      *query_str = "?#abc??111";
+        const char      *dst_query_str = "";
 
         ptr = easy_test_query_string_decode(m, query_str);
 
@@ -710,8 +710,8 @@ TEST(easy_http_hander, decode1)
 
     {
         // 井号后面有问号
-        char                    *query_str = "#?abc??111";
-        char                    *dst_query_str = "";
+        const char      *query_str = "#?abc??111";
+        const char      *dst_query_str = "";
 
         ptr = easy_test_query_string_decode(m, query_str);
 
@@ -720,8 +720,8 @@ TEST(easy_http_hander, decode1)
 
     {
         // 井号后面有问号
-        char                    *query_str = "#222?abc??111";
-        char                    *dst_query_str = "";
+        const char      *query_str = "#222?abc??111";
+        const char      *dst_query_str = "";
 
         ptr = easy_test_query_string_decode(m, query_str);
 

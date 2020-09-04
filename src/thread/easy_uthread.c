@@ -206,7 +206,7 @@ int easy_uthread_scheduler()
 void easy_uthread_print(int sig)
 {
     easy_uthread_t          *t;
-    char                    *extra;
+    const char              *extra;
 
     fprintf(stderr, "uthread list:\n");
     easy_list_for_each_entry(t, &easy_uthread_var->thread_list, thread_list_node) {

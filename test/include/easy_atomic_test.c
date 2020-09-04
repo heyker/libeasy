@@ -245,7 +245,7 @@ void *easy_atomic_mthread_trylock_start(void *args)
         if (easy_trylock(&p->lock) == 0)
             continue;
 
-        int                     t = p->v1;
+        t = p->v1;
         //EXPECT_EQ(nanosleep(&req, &rem), 0);
         p->v1 = t + 1;
         break;

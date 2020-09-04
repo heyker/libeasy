@@ -66,7 +66,7 @@ void easy_log_format_vsnprintf(char *buf, int size, const char *fmt, ...)
 TEST(easy_log, vsnprintf)
 {
     char                    buf[1024];
-    char                    *dst;
+    const char              *dst;
 
     dst = "easy_vsnprintf:";
     easy_log_format_vsnprintf(buf, 1024, "easy_vsnprintf:%.*s", 0, NULL);

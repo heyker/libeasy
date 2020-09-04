@@ -1,5 +1,12 @@
 project(easy)
 
+include_directories(
+	${PROJECT_SOURCE_DIR}/include
+	${PROJECT_SOURCE_DIR}/io
+	${PROJECT_SOURCE_DIR}/packet
+	${PROJECT_SOURCE_DIR}/packet/http
+)
+
 add_subdirectory(include)
 add_subdirectory(util)
 add_subdirectory(thread)
@@ -50,6 +57,15 @@ add_library(${PROJECT_NAME} STATIC
     ${HEADERS}
     ${SOURCES}
 )
+#add_library(${PROJECT_NAME}_static STATIC
+#    ${HEADERS}
+#    ${SOURCES}
+#)
+
+#SET_TARGET_PROPERTIES(${PROJECT_NAME}_static PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
+#SET_TARGET_PROPERTIES(${PROJECT_NAME} PROPERTIES CLEAN_DIRECT_OUTPUT 1)
+#SET_TARGET_PROPERTIES(${PROJECT_NAME}_static PROPERTIES CLEAN_DIRECT_OUTPUT 1)
+
 add_library(easy::all ALIAS ${PROJECT_NAME})
 
 target_include_directories(${PROJECT_NAME} PUBLIC

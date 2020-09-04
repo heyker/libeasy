@@ -1813,11 +1813,13 @@ char *easy_connection_str(easy_connection_t *c)
 {
     static __thread char    buffer[64];
 
-    if (!c)
-        return "null";
-
-    char                    str[32];
-    lnprintf(buffer, 64, "%s_%d_%p", easy_inet_addr_to_str(&c->addr, str, 32), c->fd, c);
+    if (!c) {
+        strcpy(buffer,"null");
+    } else {
+        char                    str[32];
+        lnprintf(buffer, 64, "%s_%d_%p", easy_inet_addr_to_str(&c->addr, str, 32), c->fd, c);
+    }
+    
     return buffer;
 }
 

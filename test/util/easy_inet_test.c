@@ -5,9 +5,9 @@
  * 测试 easy_inet
  */
 typedef struct test_check_addr_t {
-    char                    *host;
-    int                     port;
-    char                    *check;
+    const char                    *host;
+    const int                     port;
+    const char                    *check;
 } test_check_addr_t;
 // char *easy_inet_addr_to_str(easy_addr_t *addr, char *buffer, int len);
 TEST(easy_inet, addr_to_str)
@@ -49,7 +49,7 @@ TEST(easy_inet, str_to_addr)
     easy_addr_t             addr;
     char                    buffer[64], *str;
     int                     cnt, i, success;
-    test_check_addr_t       *c, list[] = {
+    const test_check_addr_t       *c, list[] = {
         {"2001:2:3:4:5:6:7:8", 0, "2001:2:3:4:5:6:7:8"},
         {"2:2:2003:2004:2005:2006:2007:2008", 12345, "[2:2:2003:2004:2005:2006:2007:2008]:12345"},
         {"255.255.255.254", 1001, "255.255.255.254:1001"},

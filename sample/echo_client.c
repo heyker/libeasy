@@ -128,7 +128,7 @@ static void print_usage(char *prog_name)
 /**
  * 解析命令行
  */
-static int parse_cmd_line(int argc, char *const argv[], cmdline_param *cp)
+static int parse_cmd_line(int argc, char *const argv[], cmdline_param *cpm)
 {
     int                     opt;
     const char              *opt_string = "hVH:c:n:s:t:";
@@ -148,25 +148,25 @@ static int parse_cmd_line(int argc, char *const argv[], cmdline_param *cp)
     while ((opt = getopt_long(argc, argv, opt_string, long_opts, NULL)) != -1) {
         switch (opt) {
         case 'H':
-            cp->address = easy_inet_str_to_addr(optarg, 0);
+            cpm->address = easy_inet_str_to_addr(optarg, 0);
             break;
 
         case 't':
-            cp->io_thread_cnt = atoi(optarg);
+            cpm->io_thread_cnt = atoi(optarg);
             break;
 
         case 'c':
-            cp->connect_cnt = atoi(optarg);
+            cpm->connect_cnt = atoi(optarg);
             break;
 
         case 'n':
-            cp->request_cnt = atoi(optarg);
+            cpm->request_cnt = atoi(optarg);
             break;
 
         case 's':
 
-            if ((cp->request_size = atoi(optarg)) < 128)
-                cp->request_size = 128;
+            if ((cpm->request_size = atoi(optarg)) < 128)
+                cpm->request_size = 128;
 
             break;
 
