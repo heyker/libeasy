@@ -262,7 +262,7 @@ void easy_kfc_clear_buffer(easy_kfc_agent_t *agent);
  * @param: client           - ip或hostname
  * @param: deny             - 1 - deny, 0 - allow
  */
-void easy_kfc_allow_client(easy_kfc_t *kfc, char *group_name, char *client, int deny);
+void easy_kfc_allow_client(easy_kfc_t *kfc, const char *group_name, const char *client, int deny);
 
 /**
  * 选择server的算法类型, rt, rr

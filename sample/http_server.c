@@ -20,7 +20,7 @@ cmdline_param           cp;
 static void print_usage(char *prog_name);
 static int parse_cmd_line(int argc, char *const argv[], cmdline_param *cp);
 static int easy_http_server_on_process(easy_request_t *r);
-static void easy_buf_string_tobuf(easy_pool_t *pool, easy_list_t *bc, char *name, easy_buf_string_t *s);
+static void easy_buf_string_tobuf(easy_pool_t *pool, easy_list_t *bc, const char *name, easy_buf_string_t *s);
 static void easy_http_request_tobuf(easy_pool_t *pool, easy_list_t *bc, easy_http_request_t *p);
 static int easy_http_server_request_process(easy_request_t *r, void *args);
 
@@ -329,7 +329,7 @@ static int easy_http_server_on_process(easy_request_t *r)
     return EASY_OK;
 }
 
-static void easy_buf_string_tobuf(easy_pool_t *pool, easy_list_t *bc, char *name, easy_buf_string_t *s)
+static void easy_buf_string_tobuf(easy_pool_t *pool, easy_list_t *bc, const char *name, easy_buf_string_t *s)
 {
     if (s->len) {
         easy_buf_t              *b = easy_buf_check_write_space(pool, bc, s->len + strlen(name) + 16);

@@ -97,7 +97,7 @@ static string getIpAddress()
     memset(&addr, 0, sizeof(addr));
 
     for(i = 0; i < cnt; i++) {
-        addr.u.addr = address[i];
+        addr.u.addr = static_cast<uint32_t>(address[i]);
         easy_inet_addr_to_str(&addr, buffer, 64);
     }
 
@@ -164,10 +164,8 @@ static void testQueries(easy_kfc_agent_t *ka,  int timeout, SQueryStatis &statis
 
         if (isOK) {
             timeradd(&(statis.totalResponseTime), &responseTime, &(statis.totalResponseTime));
-            mRTVector.push_back(responseTime.tv_sec * 1000000 + responseTime.tv_usec);
-
-            unsigned                timeUsed = responseTime.tv_sec * 1000000 + responseTime.tv_usec;
-
+            uint32_t timeUsed = static_cast<uint32_t>(responseTime.tv_sec * 1000000 + responseTime.tv_usec);
+            mRTVector.push_back(timeUsed);
             if (statis.maxTime < timeUsed) statis.maxTime = timeUsed;
 
             if (statis.minTime > timeUsed) statis.minTime = timeUsed;
@@ -182,21 +180,21 @@ static void testQueries(easy_kfc_agent_t *ka,  int timeout, SQueryStatis &statis
     for (vector<uint64_t>::iterator iter = mRTVector.begin(); iter != mRTVector.end(); ++iter)
         mTotalRT += *iter;
 
-    uint64_t                averageRT = (uint64_t)(mTotalRT / (double)statis.successCount);
+    uint64_t                averageRT = mTotalRT / statis.successCount;
     uint64_t                totalDeviation = 0;
 
     for (vector<uint64_t>::iterator iter = mRTVector.begin(); iter != mRTVector.end(); ++iter) {
         totalDeviation += (*iter - averageRT) * (*iter - averageRT);
     }
 
-    statis.RTStandardDeviation = sqrt(totalDeviation / (double)statis.successCount);
+    statis.RTStandardDeviation = sqrt(static_cast<double>(totalDeviation) / statis.successCount);
     sort(mRTVector.begin(), mRTVector.end());
-    vector<uint64_t>::size_type v_size = mRTVector.size();
+    double v_size = static_cast<double>(mRTVector.size());
 
-    if (v_size <= 1)
+    if ((int)(v_size) <= 1)
         return;
 
-    statis.RT_50 = mRTVector[v_size / 2 - 1];
+    statis.RT_50 = mRTVector[(int)(v_size * 0.5) - 1];
     statis.RT_66 = mRTVector[(int)(v_size * 0.66) - 1];
     statis.RT_75 = mRTVector[(int)(v_size * 0.75) - 1];
     statis.RT_80 = mRTVector[(int)(v_size * 0.8) - 1];
@@ -413,7 +411,7 @@ int main(int argc, char *argv[])
             break;
 
         case 'n':
-            number = strtoul(optarg, NULL, 10);
+            number = static_cast<uint32_t>(strtoul(optarg, NULL, 10));
             g_req  = number;
             break;
 
@@ -506,7 +504,7 @@ int main(int argc, char *argv[])
             //cout << "QPS:          " << g_statis.successCount/g_totalResponseTime << endl;
             cout << "QPS:          " << g_statis.successCount / g_totalTestTime << endl;
 
-            printf("Bandwidth:  %.2f MB/s\n", ((uint64_t)g_statis.successCount * DEFAULT_MSG_LEN) / (1024 * 1024 * g_totalTestTime));
+            printf("Bandwidth:  %.2f MB/s\n", ((double)g_statis.successCount * DEFAULT_MSG_LEN) / (1024 * 1024 * g_totalTestTime));
             printf("Timeout rate: %.2f%%\n", (double)g_statis.recvTimeoutCount * 100 / g_statis.totalCount);
             printf("Error rate:   %.2f%%\n", (double)g_statis.failedCount * 100 / g_statis.totalCount);
 
@@ -561,8 +559,8 @@ int main(int argc, char *argv[])
     easy_kfc_wait(kfc);
     easy_kfc_destroy(kfc);
 
-    double                  totalTestTime = difftime(statis.afterTestTime, statis.beforeTestTime);
-    double                  totalResponseTime = statis.totalResponseTime.tv_sec + statis.totalResponseTime.tv_usec / 1000000.0;
+    double  totalTestTime = difftime(statis.afterTestTime, statis.beforeTestTime);
+    double  totalResponseTime = static_cast<double>(statis.totalResponseTime.tv_sec + statis.totalResponseTime.tv_usec) / 1000000.0;
 
     if (childNum > 1) {
         // 子进程输出统计结果
@@ -580,7 +578,7 @@ int main(int argc, char *argv[])
         //cout << "QPS:          " << statis.successCount/totalResponseTime << endl;
         cout << "QPS:          " << statis.successCount / totalTestTime << endl;
 
-        printf("Bandwidth:  %.2f MB/s\n", ((uint64_t)statis.successCount * DEFAULT_MSG_LEN) / (1024 * 1024 * totalTestTime));
+        printf("Bandwidth:  %.2f MB/s\n", ((double)statis.successCount * DEFAULT_MSG_LEN) / (1024 * 1024 * totalTestTime));
         printf("Timeout rate: %.2f%%\n", (double)statis.recvTimeoutCount * 100 / statis.totalCount);
         printf("Error rate:   %.2f%%\n", (double)statis.failedCount * 100 / statis.totalCount);
 

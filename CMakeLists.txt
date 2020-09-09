@@ -46,7 +46,7 @@ set(CXX_FLAGS
   -Wno-unused-parameter
   -Woverloaded-virtual
   -Wpointer-arith
-  -Wshadow
+#  -Wshadow
   -Wwrite-strings
   -march=native
   -MMD

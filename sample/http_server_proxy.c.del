@@ -8,7 +8,7 @@ typedef struct cmdline_param {
     int                     port;
     int                     io_thread_cnt;
     int                     print_stat;
-    uint64_t                address;
+    easy_addr_t             address;
 } cmdline_param;
 
 /*************************************************************************************************
@@ -166,7 +166,14 @@ int http_fetch_new_packet(easy_connection_t *fc)
     easy_http_packet_t      *packet;
     easy_buf_t              *b;
 
-    if (fc->doing_request_count + fc->done_request_count > 0)
+    if (unlikely(NULL == fc))
+        return EASY_ERROR;
+
+    if (NULL != fc->con_summary && fc->con_summary->done_request_count > 0) {
+        return EASY_OK;
+    }
+
+    if (fc->doing_request_count > 0)
         return EASY_OK;
 
     if ((packet = easy_session_packet_create(easy_http_packet_t, s, 0)) == NULL)

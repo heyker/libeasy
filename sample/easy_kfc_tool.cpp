@@ -143,16 +143,16 @@ void *do_client(void *args)
                     printf("Sent/Recv MSG LEN:\t%u\n", g_msgsize);
 
                     timersub(&aftertime, &beforetime, &responsetime);
-                    unsigned                timeused = responsetime.tv_sec * 1000000 + responsetime.tv_usec;
-                    printf("time used:\t%u\n", timeused);
+                    int64_t                timeused = responsetime.tv_sec * 1000000 + responsetime.tv_usec;
+                    printf("time used:\t%ld\n", timeused);
 
                     timersub(&senttime, &beforetime, &responsetime);
-                    unsigned                timesent = responsetime.tv_sec * 1000000 + responsetime.tv_usec;
-                    printf("time sent:\t%u\n", timesent);
+                    int64_t                timesent = responsetime.tv_sec * 1000000 + responsetime.tv_usec;
+                    printf("time sent:\t%ld\n", timesent);
 
                     timersub(&aftertime, &senttime, &responsetime);
-                    unsigned                timerecv = responsetime.tv_sec * 1000000 + responsetime.tv_usec;
-                    printf("time recv:\t%u\n", timerecv);
+                    int64_t                timerecv = responsetime.tv_sec * 1000000 + responsetime.tv_usec;
+                    printf("time recv:\t%ld\n", timerecv);
                 }
             } else {
                 printf("easy_kfc_recv_message return value:\t%d\n", ret);

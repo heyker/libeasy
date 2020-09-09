@@ -643,7 +643,7 @@ void easy_kfc_destroy(easy_kfc_t *kfc)
 }
 
 // add client to server
-void easy_kfc_allow_client(easy_kfc_t *kfc, char *group_name, char *client, int allow)
+void easy_kfc_allow_client(easy_kfc_t *kfc, const char *group_name, const char *client, int allow)
 {
     easy_kfc_group_t        *group = NULL;
     easy_addr_t             addr;

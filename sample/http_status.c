@@ -61,11 +61,11 @@ cmdline_param           cp;
 static int parse_cmd_line(int argc, char *const argv[], cmdline_param *cp);
 static int http_status_on_process(easy_request_t *r);
 static int http_status_vip_exist(char *vip);
-static int http_status_file_exist(char *statusfile);
+static int http_status_file_exist(const char *statusfile);
 static int http_status_file_cmp(const void *a, const void *b);
 static void http_status_read_vip(struct ev_loop *loop, ev_timer *w, int revents);
 static void http_status_read_dir(struct ev_loop *loop, ev_io *w, int revents);
-static void print_usage(char *prog_name);
+static void print_usage(const char *prog_name);
 static void daemonize(const char *pidfile);
 static int http_status_start_notify();
 
@@ -144,7 +144,7 @@ int main(int argc, char **argv)
 /**
  * 命令行帮助
  */
-static void print_usage(char *prog_name)
+static void print_usage(const char *prog_name)
 {
     fprintf(stderr, "%s [-p port] [-i ip] [-d] [-m monitor_dir]\n"
             "    -p, --port              port to listen, default: 8001\n"
@@ -225,7 +225,8 @@ static int parse_cmd_line(int argc, char *const argv[], cmdline_param *cp)
  */
 static int http_status_on_process(easy_request_t *r)
 {
-    char                        *service, *port, *vip;
+    const char                  *service;
+    char                        *port, *vip;
     char                        *k, *v, *nk;
     char                        statusfile[HTTP_STATUS_PATH_LEN];
     easy_http_request_t         *p;
@@ -279,7 +280,7 @@ static int http_status_on_process(easy_request_t *r)
     }
 
     // 文件存在否?
-    char                    *msg = "404 Not Found - Service not aviliable!";
+    const char *msg = "404 Not Found - Service not aviliable!";
 
     if (cp.dir_table && http_status_file_exist(service)) {
         if (vip) {
@@ -313,7 +314,7 @@ static int http_status_file_cmp(const void *a, const void *b)
 /**
  * 文件存在否?
  */
-static int http_status_file_exist(char *statusfile)
+static int http_status_file_exist(const char *statusfile)
 {
     uint64_t                key;
     key = easy_hash_code(statusfile, strlen(statusfile), 5);
