@@ -101,6 +101,10 @@ int easy_semaphore_timedwait_rel(easy_semaphore_t *semaphore, int64_t ms) {
     // overflow?
     timeout.tv_sec += (int)(ms / 1000);
     timeout.tv_nsec += (int)(ms % 1000) * 1000000;
+    if (timeout.tv_nsec > 1000000000L) {
+        timeout.tv_nsec %= 1000000000L;
+        timeout.tv_sec ++;
+    }
     ret = sem_timedwait(&semaphore->sem, &timeout);
 #endif
     return ret;
