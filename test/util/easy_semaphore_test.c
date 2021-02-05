@@ -97,14 +97,15 @@ TEST(easy_semaphore, single_zero) {
     clock_gettime(CLOCK_REALTIME, &timeout);
     begin = now_ms();
     timeout.tv_nsec += 300 * 1000 * 1000;
-    if (timeout.tv_nsec > 1000000000) {
-        timeout.tv_nsec %= 1000000000;
+    if (timeout.tv_nsec > 1000000000L) {
+        timeout.tv_nsec %= 1000000000L;
         timeout.tv_sec ++;
     }
     ret = easy_semaphore_timedwait(&semaphore, &timeout);
     end = now_ms();
     EXPECT_EQ(ret, -1);
-    EXPECT_EQ(valid_time(end - begin, 260, 320), 1);
+    EXPECT_EQ(valid_time(end - begin, 260, 400), 1);
+    //printf("zero_ret:%d, begin:%ld, end:%ld, delta:%ld\n", ret, begin, end, end-begin);
 
     ret = easy_semaphore_signal(&semaphore);
     EXPECT_EQ(ret, 0);
